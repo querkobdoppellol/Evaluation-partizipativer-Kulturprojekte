@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0",
+  "instrument": "B",
+  "titel": "Teilnehmer*innen-Fragebogen – Evaluation partizipativer Kulturprojekte",
+  "sprache": "de",
+  "hinweise": {
+    "anonym_by_design": true,
+    "freiwillig": "Alle Items sind überspringbar.",
+    "freitext_hinweis": "Bitte keine Namen.",
+    "vorlesen": "TTS (Browser) für Item-Text und Antwortoptionen."
+  },
+
+  "scale": {
+    "id": "likert4",
+    "richtung": "hoeher_positiver",
+    "stufen": [
+      { "wert": 4, "farbe": "gruen",  "symbol": "😊", "text": "Ja! – stimme voll zu" },
+      { "wert": 3, "farbe": "gelb",   "symbol": "🙂", "text": "eher ja" },
+      { "wert": 2, "farbe": "orange", "symbol": "😕", "text": "eher nein" },
+      { "wert": 1, "farbe": "rot",    "symbol": "☹️", "text": "Nein! – stimme nicht zu" }
+    ],
+    "codierung_redundant": ["farbe", "symbol", "text", "audio"]
+  },
+
+  "lists": {
+    "LISTE_kreativformen": ["Malen", "Basteln", "Bauen", "Musik", "Tanz", "Theater", "Schreiben", "Film/Video", "Technik", "Spiele", "Handwerk", "anderes"],
+    "LISTE_ziele": ["Spaß haben", "etwas lernen", "Freunde finden", "etwas gestalten", "gemeinsam Zeit verbringen"],
+    "LISTE_warum": ["eigenes Interesse", "Freunde", "Eltern", "Schule", "Arbeit"]
+  },
+
+  "constructs": [
+    { "code": "DEMO",   "label": "Einwilligung & Person",           "theorie": "-",                              "zweck": "Rahmendaten, Vergleichsgruppen" },
+    { "code": "MOT",    "label": "Motivation & Erwartung",          "theorie": "Gee",                            "zweck": "Eigen-/Fremdmotivation, Zielbild" },
+    { "code": "LERN",   "label": "Lernwert",                        "theorie": "Gee, Simon",                     "zweck": "Lerneffekte (Selbst-/Weltwissen)" },
+    { "code": "SOZ",    "label": "Sozialer Wert & Zugehörigkeit",   "theorie": "Simon, Gee (Affinity Space)",    "zweck": "Verbundenheit, geteilte Passion" },
+    { "code": "SCHAFF", "label": "Schaffen & Selbstvertrauen",      "theorie": "Simon, Lowinski",                "zweck": "Herstellen, Wertschätzung" },
+    { "code": "PART",   "label": "Partizipationsgrad",              "theorie": "Tufte & Mefalopulos, Simon",     "zweck": "Mitbestimmung, Beitrag, Teilhabewunsch" },
+    { "code": "BARR",   "label": "Barrieren",                       "theorie": "Lange & Kleinschmidt",           "zweck": "Erlebte Hürden" },
+    { "code": "ERF",    "label": "Erfahrungsqualität",              "theorie": "Simon (Scaffolding), Lowinski",  "zweck": "Klarheit, Leitung, Zusammenarbeit, Körper, Wohlbefinden" },
+    { "code": "SPIEL",  "label": "Spiel & Erprobung",              "theorie": "Gee (low cost of failure)",      "zweck": "Spielen, Rollen, Ausprobieren, Spaß" },
+    { "code": "SELBST", "label": "Demokratische Selbstwirksamkeit", "theorie": "Habermas, Dahlgren",             "zweck": "Pre-Post-Kern der Wirkungsmessung" },
+    { "code": "FREI",   "label": "Freiraum & Mikro-Interaktion",   "theorie": "Beuys/Giesecke, Lowinski",       "zweck": "Offener Ausdruck, verkörperte Mini-Beiträge" }
+  ],
+
+  "meta_items": ["meta_projekt", "meta_zeitpunkt", "demo_consent"],
+
+  "backend_ressourcen": {
+    "projekte": {
+      "beschreibung": "Dynamische Betriebsdaten – im Backend pflegbar (CRUD), NICHT Teil des Instruments.",
+      "felder": {
+        "id": "string (Join-Schlüssel über alle Bögen)",
+        "name": "string (Anzeigename)",
+        "aktiv": "bool (nur aktive sind wählbar)",
+        "traeger": "string (optional)",
+        "steckbrief_id": "string (optional, Verweis Bogen A)",
+        "start": "date (optional)",
+        "ende": "date (optional)"
+      }
+    }
+  },
+
+  "items": [
+    { "id": "meta_projekt",     "konstrukt": "META", "typ": "projekt_select", "zeitpunkt": "both", "pflicht": true,  "quelle": "backend:projekte", "filter": "aktiv==true", "text": "Um welches Projekt geht es?" },
+    { "id": "meta_zeitpunkt",   "konstrukt": "META", "typ": "single",         "zeitpunkt": "both", "pflicht": true,  "optionen": ["Anfang", "Ende"], "text": "Wann füllst du den Fragebogen aus?", "steuert": "form" },
+
+    { "id": "demo_consent",      "konstrukt": "DEMO", "typ": "ja_nein",  "zeitpunkt": "both", "ueberspringbar": true,  "text": "Wir merken uns deine Antworten ohne Namen. Ist das ok für dich?", "rolle": "weiche_zustimmung", "rechtsgrundlage": false },
+    { "id": "demo_alter",        "konstrukt": "DEMO", "typ": "single",   "zeitpunkt": "both", "optionen": ["0–5", "6–12", "13–18", "19–27", "28–45", "46–65", "66–80", "älter"], "text": "Wie alt bist du?" },
+    { "id": "demo_gender",       "konstrukt": "DEMO", "typ": "single",   "zeitpunkt": "both", "optionen": ["männlich", "weiblich", "divers", "keine Angabe"], "text": "Bist du …?" },
+    { "id": "demo_erfahrung",    "konstrukt": "DEMO", "typ": "single",   "zeitpunkt": "both", "optionen": ["noch nie", "ein bisschen", "oft"], "text": "Hast du sowas schon mal gemacht?" },
+    { "id": "demo_hier_schonmal","konstrukt": "DEMO", "typ": "ja_nein",  "zeitpunkt": "both", "text": "Warst du hier schon mal bei einem Projekt?" },
+
+    { "id": "mot_warum",   "konstrukt": "MOT", "typ": "multi",   "zeitpunkt": "pre",  "liste": "LISTE_warum",         "text": "Warum machst du mit?" },
+    { "id": "mot_wunsch",  "konstrukt": "MOT", "typ": "frei",    "zeitpunkt": "pre",  "max_eintraege": 1, "ueberspringbar": true, "text": "Was möchtest du im Projekt machen?" },
+    { "id": "mot_thema",   "konstrukt": "MOT", "typ": "multi",   "zeitpunkt": "both", "liste": "LISTE_kreativformen", "text": "Worum geht es im Projekt? Was glaubst du?", "vergleich": "Bogen A" },
+    { "id": "mot_ziel",    "konstrukt": "MOT", "typ": "multi",   "zeitpunkt": "both", "liste": "LISTE_ziele",         "text": "Was ist das Ziel vom Projekt?", "vergleich": "Bogen C" },
+    { "id": "mot_wieder",  "konstrukt": "MOT", "typ": "likert4", "polung": "+",        "zeitpunkt": "post", "text": "Ich mache wieder mit." },
+    { "id": "mot_helfen",  "konstrukt": "MOT", "typ": "likert4", "polung": "+",        "zeitpunkt": "post", "text": "Ich helfe bei sowas mit." },
+
+    { "id": "lern_gate",             "konstrukt": "LERN", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Hast du etwas gelernt?" },
+    { "id": "lern_was",              "konstrukt": "LERN", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "lern_gate", "gleich": "ja" }, "codier_hinweis": ["selbstwissen", "weltwissen"], "text": "Was hast du gelernt?" },
+    { "id": "lern_von_anderen_gate", "konstrukt": "LERN", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Hast du etwas von anderen gelernt?" },
+    { "id": "lern_von_anderen_was",  "konstrukt": "LERN", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "lern_von_anderen_gate", "gleich": "ja" }, "text": "Was hast du von anderen gelernt?" },
+
+    { "id": "soz_kennen_gate",   "konstrukt": "SOZ", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Hast du jemanden kennengelernt?" },
+    { "id": "soz_kennen_anzahl", "konstrukt": "SOZ", "typ": "single",  "zeitpunkt": "post", "optionen": ["1", "2–3", "4 oder mehr"], "sichtbar_wenn": { "item": "soz_kennen_gate", "gleich": "ja" }, "datenschutz": "kein Drittname", "text": "Wie viele neue Leute hast du kennengelernt?" },
+    { "id": "soz_kontakt",  "konstrukt": "SOZ", "typ": "ja_nein", "zeitpunkt": "post", "text": "Willst du in Kontakt bleiben?" },
+    { "id": "soz_gleiches", "konstrukt": "SOZ", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "neu": true, "theorie": "Gee: geteilte Passion",       "text": "Ich habe Leute getroffen, die das Gleiche mögen wie ich." },
+    { "id": "soz_dazu",     "konstrukt": "SOZ", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "neu": true, "theorie": "Gee: Affinity / Zugehörigkeit","text": "Ich gehöre zur Gruppe dazu." },
+
+    { "id": "schaff_zusammen_gate", "konstrukt": "SCHAFF", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Habt ihr zusammen etwas gemacht?" },
+    { "id": "schaff_zusammen_was",  "konstrukt": "SCHAFF", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "schaff_zusammen_gate", "gleich": "ja" }, "text": "Was habt ihr zusammen gemacht?" },
+    { "id": "schaff_allein_gate",   "konstrukt": "SCHAFF", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Hast du alleine etwas gemacht?" },
+    { "id": "schaff_allein_was",    "konstrukt": "SCHAFF", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "schaff_allein_gate", "gleich": "ja" }, "text": "Was hast du alleine gemacht?" },
+    { "id": "schaff_zeigen",        "konstrukt": "SCHAFF", "typ": "ja_nein", "zeitpunkt": "post", "indikator": "Selbstvertrauen", "text": "Zeigst du das anderen?" },
+
+    { "id": "part_mitbestimmt",  "konstrukt": "PART", "typ": "ja_nein", "zeitpunkt": "post", "flag": { "regel": "anteil_nein > 0.10", "aktion": "kritisch_pruefen" }, "text": "Konntest du mitbestimmen?" },
+    { "id": "part_beitrag_gate", "konstrukt": "PART", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Hast du etwas beigetragen?" },
+    { "id": "part_beitrag_was",  "konstrukt": "PART", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "part_beitrag_gate", "gleich": "ja" }, "text": "Was hast du beigetragen?" },
+    { "id": "part_mehr_gewollt", "konstrukt": "PART", "typ": "ja_nein", "zeitpunkt": "post", "flag": { "regel": "anteil_ja > 0.10", "aktion": "kritisch_pruefen" }, "text": "Wolltest du gerne mehr mitmachen?" },
+
+    { "id": "barr_gate", "konstrukt": "BARR", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "neu": true, "text": "War etwas schwer für dich?" },
+    { "id": "barr_was",  "konstrukt": "BARR", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "barr_gate", "gleich": "ja" }, "neu": true, "text": "Was war schwer?" },
+
+    { "id": "erf_aufgaben_schaffbar", "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Aufgaben waren gut zu schaffen." },
+    { "id": "erf_ziel_klar",          "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich wusste, was das Ziel ist." },
+    { "id": "erf_verstanden",         "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich habe die Aufgaben verstanden." },
+    { "id": "erf_nachgefragt",        "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Wenn ich etwas nicht wusste, habe ich gefragt." },
+    { "id": "erf_leitung_gut",        "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Leiter*innen waren gut." },
+    { "id": "erf_organisiert",        "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Alles war gut organisiert." },
+    { "id": "erf_zusammen",           "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich habe mit anderen zusammengearbeitet." },
+    { "id": "erf_andere_mitgemacht",  "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die anderen haben gut mitgemacht." },
+    { "id": "erf_bewegung",           "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "theorie": "Lowinski: Körper", "text": "Ich konnte mich bewegen." },
+    { "id": "erf_respekt",            "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Alle waren nett zu mir." },
+    { "id": "erf_wohl",               "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich habe mich wohlgefühlt." },
+
+    { "id": "spiel_gespielt",    "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich habe gespielt." },
+    { "id": "spiel_rolle",       "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich war in einer anderen Rolle." },
+    { "id": "spiel_ausprobiert", "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich habe etwas ausprobiert." },
+    { "id": "spiel_spass",       "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Es hat Spaß gemacht." },
+
+    { "id": "selbst_veraendern", "konstrukt": "SELBST", "typ": "likert4", "polung": "+", "zeitpunkt": "both", "pre_post_kern": true, "text": "Ich kann in der Welt etwas verändern." },
+    { "id": "selbst_gemeinsam",  "konstrukt": "SELBST", "typ": "likert4", "polung": "+", "zeitpunkt": "both", "pre_post_kern": true, "text": "Gemeinsam geht mehr." },
+
+    { "id": "frei_text",       "konstrukt": "FREI", "typ": "mal_schreib", "zeitpunkt": "post", "ueberspringbar": true, "farbwahl": true, "hinweis": "Bitte keine Namen.", "text": "Hier kannst du etwas schreiben oder malen." },
+    { "id": "frei_mehrfarbig", "konstrukt": "FREI", "typ": "scan",        "zeitpunkt": "post", "messung": "mehr_als_eine_farbe_benutzt", "analog": "vierfarbiger Kugelschreiber" },
+    { "id": "frei_ecke",       "konstrukt": "FREI", "typ": "scan",        "zeitpunkt": "post", "messung": "interaktion_genutzt", "analog": "Blatt-Ecke abreißen", "text": "Tipp hier, wenn du magst." }
+  ],
+
+  "forms": {
+    "pre": [
+      "demo_alter", "demo_gender", "demo_erfahrung", "demo_hier_schonmal",
+      "mot_warum", "mot_wunsch", "mot_thema", "mot_ziel",
+      "selbst_veraendern", "selbst_gemeinsam"
+    ],
+    "post": [
+      "demo_alter",
+      "mot_thema", "mot_ziel",
+      "lern_gate", "lern_was", "lern_von_anderen_gate", "lern_von_anderen_was",
+      "soz_kennen_gate", "soz_kennen_anzahl", "soz_kontakt", "soz_gleiches", "soz_dazu",
+      "schaff_zusammen_gate", "schaff_zusammen_was", "schaff_allein_gate", "schaff_allein_was", "schaff_zeigen",
+      "part_mitbestimmt", "part_beitrag_gate", "part_beitrag_was", "part_mehr_gewollt",
+      "barr_gate", "barr_was",
+      "erf_aufgaben_schaffbar", "erf_ziel_klar", "erf_verstanden", "erf_nachgefragt", "erf_leitung_gut", "erf_organisiert", "erf_zusammen", "erf_andere_mitgemacht", "erf_bewegung", "erf_respekt", "erf_wohl",
+      "spiel_gespielt", "spiel_rolle", "spiel_ausprobiert", "spiel_spass",
+      "selbst_veraendern", "selbst_gemeinsam",
+      "mot_wieder", "mot_helfen",
+      "frei_text", "frei_mehrfarbig", "frei_ecke"
+    ]
+  },
+
+  "auswertung": {
+    "konstrukt_score": "Mittelwert der likert4-Items je Konstrukt (kein Umpolen nötig, alle +).",
+    "pre_post_differenz": ["selbst_veraendern", "selbst_gemeinsam"],
+    "pre_post_modus": "gepaart wenn Token passt, sonst ungepaart (Kohorte)",
+    "flags": ["part_mitbestimmt", "part_mehr_gewollt"],
+    "haeufigkeiten": ["lern_was", "lern_von_anderen_was", "schaff_zusammen_was", "schaff_allein_was", "part_beitrag_was", "barr_was"],
+    "gruppierung": "projekt_id"
+  }
+}

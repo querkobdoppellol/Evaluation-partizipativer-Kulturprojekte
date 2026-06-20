@@ -1,0 +1,29 @@
+# Claude Code local settings
+.claude/
+
+# Dependencies
+node_modules/
+
+# Build output
+frontend/dist/
+
+# Database (runtime data, never commit)
+backend/data/
+*.db
+*.db-shm
+*.db-wal
+
+# Environment / secrets
+.env
+.env.local
+.env.production
+
+# Test artifacts
+verify-shots*/
+verify-m1.mjs
+verify-m2.mjs
+
+# OS / Editor
+.DS_Store
+.vscode/
+*.log
