@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "instrument": "B-E",
+  "titel": "Teilnehmer*innen-Einschätzung durch Leitung – Evaluation partizipativer Kulturprojekte",
+  "sprache": "de",
+  "hinweise": {
+    "framing": "Im Folgenden wollen wir einschätzen, wie das Projekt für die Teilnehmer*innen war. Gib bei den Fragen an, was du glaubst, wie die Teilnehmer*innen am Projekt die Fragen beantworten würden.",
+    "zweck": "Wahrnehmungsabgleich: dieselben Konstrukte wie Bogen B, semantisch auf Fremdperspektive angepasst. IDs identisch → direkter Vergleich im Dashboard.",
+    "zielgruppe": "Projektleitende und unterstützendes Team (nach Bogen C auszufüllen)"
+  },
+
+  "scale": {
+    "id": "likert4",
+    "richtung": "hoeher_positiver",
+    "stufen": [
+      { "wert": 4, "farbe": "gruen",  "symbol": "😊", "text": "Ja! – stimme voll zu" },
+      { "wert": 3, "farbe": "gelb",   "symbol": "🙂", "text": "eher ja" },
+      { "wert": 2, "farbe": "orange", "symbol": "😕", "text": "eher nein" },
+      { "wert": 1, "farbe": "rot",    "symbol": "☹️", "text": "Nein! – stimme nicht zu" }
+    ],
+    "codierung_redundant": ["farbe", "symbol", "text"]
+  },
+
+  "lists": {
+    "LISTE_kreativformen": ["Malen", "Basteln", "Bauen", "Musik", "Tanz", "Theater", "Schreiben", "Film/Video", "Technik", "Spiele", "Handwerk", "anderes"],
+    "LISTE_ziele": ["Spaß haben", "etwas lernen", "Freunde finden", "etwas gestalten", "gemeinsam Zeit verbringen"]
+  },
+
+  "constructs": [
+    { "code": "MOT",    "label": "Motivation",              "theorie": "Gee",           "zweck": "Einschätzung der Motivation der Teilnehmer*innen" },
+    { "code": "LERN",   "label": "Lernwert",                "theorie": "Gee, Simon",    "zweck": "Einschätzung des Lerneffekts" },
+    { "code": "SOZ",    "label": "Sozialer Wert",           "theorie": "Simon, Gee",    "zweck": "Einschätzung sozialer Verbindungen" },
+    { "code": "SCHAFF", "label": "Schaffen",                "theorie": "Simon",         "zweck": "Einschätzung von Herstellungsaktivitäten" },
+    { "code": "PART",   "label": "Partizipationsgrad",      "theorie": "Tufte, Simon",  "zweck": "Einschätzung der Mitbestimmungsqualität" },
+    { "code": "BARR",   "label": "Barrieren",               "theorie": "Lange",         "zweck": "Einschätzung erlebter Hürden" },
+    { "code": "ERF",    "label": "Erfahrungsqualität",      "theorie": "Simon",         "zweck": "Einschätzung der Erfahrungsqualität" },
+    { "code": "SPIEL",  "label": "Spiel & Erprobung",       "theorie": "Gee",           "zweck": "Einschätzung von Spielqualität" },
+    { "code": "SELBST", "label": "Demokrat. Selbstwirksamkeit", "theorie": "Habermas", "zweck": "Einschätzung der Selbstwirksamkeitserfahrung" }
+  ],
+
+  "items": [
+    { "id": "mot_thema",  "konstrukt": "MOT", "typ": "multi",   "zeitpunkt": "post", "liste": "LISTE_kreativformen", "text": "Womit haben die Teilnehmer*innen sich im Projekt beschäftigt?", "vergleich": "Bogen B: mot_thema" },
+    { "id": "mot_ziel",   "konstrukt": "MOT", "typ": "multi",   "zeitpunkt": "post", "liste": "LISTE_ziele",         "text": "Was war das Ziel des Projekts aus Sicht der Teilnehmer*innen?", "vergleich": "Bogen B: mot_ziel" },
+    { "id": "mot_wieder", "konstrukt": "MOT", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen würden wieder mitmachen.", "vergleich": "Bogen B: mot_wieder" },
+    { "id": "mot_helfen", "konstrukt": "MOT", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen würden bei ähnlichen Projekten mithelfen.", "vergleich": "Bogen B: mot_helfen" },
+
+    { "id": "lern_gate",             "konstrukt": "LERN", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Haben die Teilnehmer*innen etwas gelernt?", "vergleich": "Bogen B: lern_gate" },
+    { "id": "lern_was",              "konstrukt": "LERN", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "lern_gate", "gleich": "ja" }, "text": "Was haben sie gelernt?", "vergleich": "Bogen B: lern_was" },
+    { "id": "lern_von_anderen_gate", "konstrukt": "LERN", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Haben die Teilnehmer*innen voneinander gelernt?", "vergleich": "Bogen B: lern_von_anderen_gate" },
+    { "id": "lern_von_anderen_was",  "konstrukt": "LERN", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "lern_von_anderen_gate", "gleich": "ja" }, "text": "Was haben sie voneinander gelernt?", "vergleich": "Bogen B: lern_von_anderen_was" },
+
+    { "id": "soz_kennen_gate",   "konstrukt": "SOZ", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Haben die Teilnehmer*innen neue Leute kennengelernt?", "vergleich": "Bogen B: soz_kennen_gate" },
+    { "id": "soz_kennen_anzahl", "konstrukt": "SOZ", "typ": "single",  "zeitpunkt": "post", "optionen": ["1", "2–3", "4 oder mehr"], "sichtbar_wenn": { "item": "soz_kennen_gate", "gleich": "ja" }, "text": "Wie viele neue Leute haben sie kennengelernt?", "vergleich": "Bogen B: soz_kennen_anzahl" },
+    { "id": "soz_kontakt",  "konstrukt": "SOZ", "typ": "ja_nein", "zeitpunkt": "post", "text": "Wollen die Teilnehmer*innen in Kontakt bleiben?", "vergleich": "Bogen B: soz_kontakt" },
+    { "id": "soz_gleiches", "konstrukt": "SOZ", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben Leute getroffen, die das Gleiche mögen wie sie.", "vergleich": "Bogen B: soz_gleiches" },
+    { "id": "soz_dazu",     "konstrukt": "SOZ", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben sich zur Gruppe dazugehörig gefühlt.", "vergleich": "Bogen B: soz_dazu" },
+
+    { "id": "schaff_zusammen_gate", "konstrukt": "SCHAFF", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Haben die Teilnehmer*innen zusammen etwas gemacht?", "vergleich": "Bogen B: schaff_zusammen_gate" },
+    { "id": "schaff_zusammen_was",  "konstrukt": "SCHAFF", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "schaff_zusammen_gate", "gleich": "ja" }, "text": "Was haben sie zusammen gemacht?", "vergleich": "Bogen B: schaff_zusammen_was" },
+    { "id": "schaff_allein_gate",   "konstrukt": "SCHAFF", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Haben die Teilnehmer*innen alleine etwas gemacht?", "vergleich": "Bogen B: schaff_allein_gate" },
+    { "id": "schaff_allein_was",    "konstrukt": "SCHAFF", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "schaff_allein_gate", "gleich": "ja" }, "text": "Was haben sie alleine gemacht?", "vergleich": "Bogen B: schaff_allein_was" },
+    { "id": "schaff_zeigen",        "konstrukt": "SCHAFF", "typ": "ja_nein", "zeitpunkt": "post", "text": "Die Teilnehmer*innen zeigen das anderen.", "vergleich": "Bogen B: schaff_zeigen" },
+
+    { "id": "part_mitbestimmt",  "konstrukt": "PART", "typ": "ja_nein", "zeitpunkt": "post", "text": "Konnten die Teilnehmer*innen mitbestimmen?", "vergleich": "Bogen B: part_mitbestimmt" },
+    { "id": "part_beitrag_gate", "konstrukt": "PART", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "Haben die Teilnehmer*innen etwas beigetragen?", "vergleich": "Bogen B: part_beitrag_gate" },
+    { "id": "part_beitrag_was",  "konstrukt": "PART", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "part_beitrag_gate", "gleich": "ja" }, "text": "Was haben sie beigetragen?", "vergleich": "Bogen B: part_beitrag_was" },
+    { "id": "part_mehr_gewollt", "konstrukt": "PART", "typ": "ja_nein", "zeitpunkt": "post", "text": "Wollten die Teilnehmer*innen gerne mehr mitmachen?", "vergleich": "Bogen B: part_mehr_gewollt" },
+
+    { "id": "barr_gate", "konstrukt": "BARR", "typ": "ja_nein", "zeitpunkt": "post", "gate": true, "text": "War etwas schwer für die Teilnehmer*innen?", "vergleich": "Bogen B: barr_gate" },
+    { "id": "barr_was",  "konstrukt": "BARR", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "barr_gate", "gleich": "ja" }, "text": "Was war schwer?", "vergleich": "Bogen B: barr_was" },
+
+    { "id": "erf_aufgaben_schaffbar", "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Aufgaben waren gut zu schaffen.", "vergleich": "Bogen B: erf_aufgaben_schaffbar" },
+    { "id": "erf_ziel_klar",          "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen wussten, was das Ziel ist.", "vergleich": "Bogen B: erf_ziel_klar" },
+    { "id": "erf_verstanden",         "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben die Aufgaben verstanden.", "vergleich": "Bogen B: erf_verstanden" },
+    { "id": "erf_nachgefragt",        "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Wenn die Teilnehmer*innen etwas nicht wussten, haben sie gefragt.", "vergleich": "Bogen B: erf_nachgefragt" },
+    { "id": "erf_leitung_gut",        "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Leitung war gut.", "vergleich": "Bogen B: erf_leitung_gut" },
+    { "id": "erf_organisiert",        "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Alles war gut organisiert.", "vergleich": "Bogen B: erf_organisiert" },
+    { "id": "erf_zusammen",           "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben mit anderen zusammengearbeitet.", "vergleich": "Bogen B: erf_zusammen" },
+    { "id": "erf_andere_mitgemacht",  "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben gut mitgemacht.", "vergleich": "Bogen B: erf_andere_mitgemacht" },
+    { "id": "erf_bewegung",           "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen konnten sich bewegen.", "vergleich": "Bogen B: erf_bewegung" },
+    { "id": "erf_respekt",            "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Alle waren nett zu den Teilnehmer*innen.", "vergleich": "Bogen B: erf_respekt" },
+    { "id": "erf_wohl",               "konstrukt": "ERF", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben sich wohlgefühlt.", "vergleich": "Bogen B: erf_wohl" },
+
+    { "id": "spiel_gespielt",    "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben gespielt.", "vergleich": "Bogen B: spiel_gespielt" },
+    { "id": "spiel_rolle",       "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen waren in einer anderen Rolle.", "vergleich": "Bogen B: spiel_rolle" },
+    { "id": "spiel_ausprobiert", "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben etwas ausprobiert.", "vergleich": "Bogen B: spiel_ausprobiert" },
+    { "id": "spiel_spass",       "konstrukt": "SPIEL", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Den Teilnehmer*innen hat es Spaß gemacht.", "vergleich": "Bogen B: spiel_spass" },
+
+    { "id": "selbst_veraendern", "konstrukt": "SELBST", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen glauben, in der Welt etwas verändern zu können.", "vergleich": "Bogen B: selbst_veraendern" },
+    { "id": "selbst_gemeinsam",  "konstrukt": "SELBST", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen glauben: Gemeinsam geht mehr.", "vergleich": "Bogen B: selbst_gemeinsam" }
+  ],
+
+  "forms": {
+    "pre": [],
+    "post": [
+      "mot_thema", "mot_ziel",
+      "lern_gate", "lern_was", "lern_von_anderen_gate", "lern_von_anderen_was",
+      "soz_kennen_gate", "soz_kennen_anzahl", "soz_kontakt", "soz_gleiches", "soz_dazu",
+      "schaff_zusammen_gate", "schaff_zusammen_was", "schaff_allein_gate", "schaff_allein_was", "schaff_zeigen",
+      "part_mitbestimmt", "part_beitrag_gate", "part_beitrag_was", "part_mehr_gewollt",
+      "barr_gate", "barr_was",
+      "erf_aufgaben_schaffbar", "erf_ziel_klar", "erf_verstanden", "erf_nachgefragt",
+      "erf_leitung_gut", "erf_organisiert", "erf_zusammen", "erf_andere_mitgemacht",
+      "erf_bewegung", "erf_respekt", "erf_wohl",
+      "spiel_gespielt", "spiel_rolle", "spiel_ausprobiert", "spiel_spass",
+      "selbst_veraendern", "selbst_gemeinsam",
+      "mot_wieder", "mot_helfen"
+    ]
+  },
+
+  "auswertung": {
+    "vergleich_mit_B": "Identische item-IDs → direkte Differenzbildung pro Item: B-E[item] – B[item]",
+    "konstrukt_score": "Mittelwert der likert4-Items je Konstrukt — wie Bogen B",
+    "interpretation": "Positive Differenz: Leitung überschätzt Teilnehmer*innen. Negative Differenz: Leitung unterschätzt."
+  }
+}

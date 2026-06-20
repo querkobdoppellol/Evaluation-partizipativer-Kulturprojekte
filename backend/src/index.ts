@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import './db.js'; // init DB + schema + seed
 import { projekteRoutes } from './routes/projekte.js';
 import { antwortenRoutes } from './routes/antworten.js';
+import { adminAntwortenRoutes } from './routes/adminAntworten.js';
 
 const PORT   = Number(process.env.PORT ?? 3001);
 const ORIGIN = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
@@ -28,6 +29,7 @@ if (!IS_PROD) {
 // API-Routen
 await app.register(projekteRoutes);
 await app.register(antwortenRoutes);
+await app.register(adminAntwortenRoutes);
 
 // Health check
 app.get('/api/health', async () => ({ ok: true }));

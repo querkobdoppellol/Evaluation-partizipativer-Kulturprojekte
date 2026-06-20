@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "instrument": "C",
+  "titel": "Leitungs-Reflexionsbogen – Evaluation partizipativer Kulturprojekte",
+  "sprache": "de",
+  "hinweise": {
+    "zielgruppe": "Projektleitende und künstlerisch-pädagogisches Team",
+    "zeitpunkt": "Nach Abschluss des Projekts (Post only)",
+    "zweck": "Reflexion der Projekterfahrung; Vergleich mit Teilnehmer*innen-Wahrnehmung (Bogen B)"
+  },
+
+  "scale": {
+    "id": "likert4",
+    "richtung": "hoeher_positiver",
+    "stufen": [
+      { "wert": 4, "farbe": "gruen",  "symbol": "😊", "text": "Ja! – stimme voll zu" },
+      { "wert": 3, "farbe": "gelb",   "symbol": "🙂", "text": "eher ja" },
+      { "wert": 2, "farbe": "orange", "symbol": "😕", "text": "eher nein" },
+      { "wert": 1, "farbe": "rot",    "symbol": "☹️", "text": "Nein! – stimme nicht zu" }
+    ],
+    "codierung_redundant": ["farbe", "symbol", "text"]
+  },
+
+  "lists": {
+    "LISTE_kreativformen": ["Malen", "Basteln", "Bauen", "Musik", "Tanz", "Theater", "Schreiben", "Film/Video", "Technik", "Spiele", "Handwerk", "anderes"],
+    "LISTE_ziele": ["Spaß haben", "etwas lernen", "Freunde finden", "etwas gestalten", "gemeinsam Zeit verbringen"],
+    "LISTE_rolle": ["Projektleitung", "Künstlerische Leitung", "Pädagogische Begleitung", "Assistenz", "sonstiges"],
+    "LISTE_erfahrung": ["erstes Projekt dieser Art", "1–3 ähnliche Projekte", "4–10 ähnliche Projekte", "mehr als 10 ähnliche Projekte"]
+  },
+
+  "constructs": [
+    { "code": "LEIT_KONTEXT",   "label": "Kontext der Leitung",              "theorie": "-",                 "zweck": "Rolle und Erfahrung der Leitungsperson" },
+    { "code": "LEIT_VERGLEICH", "label": "Thema & Ziel (Vergleich mit B)",  "theorie": "-",                 "zweck": "Gleiche Listen wie Bogen B → Leitung-Teilnehmer*innen-Vergleich im Dashboard" },
+    { "code": "LEIT_REFLEXION", "label": "Reflexion der Projekterfahrung",  "theorie": "Simon, Lowinski",   "zweck": "Qualität der Beteiligung, Lernwert, Soziales aus Leitungsperspektive" },
+    { "code": "LEIT_BARR",     "label": "Wahrgenommene Barrieren",          "theorie": "Lange & Kleinschmidt", "zweck": "Hürden aus Leitungsperspektive; Vergleich mit BARR in Bogen B" },
+    { "code": "LEIT_WIRKUNG",  "label": "Wirkung & Ausblick",               "theorie": "Habermas, Dahlgren", "zweck": "Einschätzung der Wirkung, Wiederholungsabsicht" }
+  ],
+
+  "meta_items": ["meta_projekt", "meta_zeitpunkt_c"],
+
+  "items": [
+    { "id": "meta_projekt",    "konstrukt": "META", "typ": "projekt_select", "zeitpunkt": "post", "pflicht": true, "quelle": "backend:projekte", "filter": "aktiv==true", "text": "Um welches Projekt geht es?" },
+    { "id": "meta_zeitpunkt_c","konstrukt": "META", "typ": "info",           "zeitpunkt": "post", "text": "Dieser Bogen ist für den Abschluss des Projekts." },
+
+    { "id": "leit_rolle",      "konstrukt": "LEIT_KONTEXT", "typ": "single", "zeitpunkt": "post", "liste": "LISTE_rolle",      "text": "Was ist deine Rolle in diesem Projekt?" },
+    { "id": "leit_erfahrung",  "konstrukt": "LEIT_KONTEXT", "typ": "single", "zeitpunkt": "post", "liste": "LISTE_erfahrung",  "text": "Wie viel Erfahrung hast du mit partizipativen Projekten?" },
+
+    { "id": "leit_thema",      "konstrukt": "LEIT_VERGLEICH", "typ": "multi", "zeitpunkt": "post", "liste": "LISTE_kreativformen", "text": "Welche kreativen Formen wurden im Projekt eingesetzt?", "vergleich": "Bogen B: mot_thema" },
+    { "id": "leit_ziel",       "konstrukt": "LEIT_VERGLEICH", "typ": "multi", "zeitpunkt": "post", "liste": "LISTE_ziele",         "text": "Was war das Ziel des Projekts?",                        "vergleich": "Bogen B: mot_ziel" },
+
+    { "id": "leit_ziele_erreicht",   "konstrukt": "LEIT_REFLEXION", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Projektziele wurden erreicht." },
+    { "id": "leit_part_qualitaet",   "konstrukt": "LEIT_REFLEXION", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen konnten aktiv mitbestimmen.",   "vergleich": "Bogen B: part_mitbestimmt" },
+    { "id": "leit_scaffolding",      "konstrukt": "LEIT_REFLEXION", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Aufgaben waren für die Teilnehmer*innen gut zu bewältigen.", "vergleich": "Bogen B: erf_aufgaben_schaffbar" },
+    { "id": "leit_lerneffekt",       "konstrukt": "LEIT_REFLEXION", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich konnte beobachten, dass die Teilnehmer*innen etwas gelernt haben.", "vergleich": "Bogen B: lern_gate" },
+    { "id": "leit_soziales",         "konstrukt": "LEIT_REFLEXION", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Es entstanden soziale Verbindungen zwischen den Teilnehmer*innen.", "vergleich": "Bogen B: soz_dazu" },
+    { "id": "leit_selbstwirksamkeit","konstrukt": "LEIT_REFLEXION", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Die Teilnehmer*innen haben erlebt, dass sie etwas bewirken können.", "vergleich": "Bogen B: selbst_veraendern" },
+
+    { "id": "leit_barrieren_gate",   "konstrukt": "LEIT_BARR", "typ": "ja_nein", "zeitpunkt": "post", "gate": true,                                                              "text": "Gab es Barrieren oder Hürden für die Teilnehmer*innen?" },
+    { "id": "leit_barrieren_was",    "konstrukt": "LEIT_BARR", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 3, "sichtbar_wenn": { "item": "leit_barrieren_gate", "gleich": "ja" }, "text": "Welche Barrieren gab es?" },
+
+    { "id": "leit_ueberraschung",    "konstrukt": "LEIT_WIRKUNG", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 2, "ueberspringbar": true, "text": "Was hat dich positiv überrascht?" },
+    { "id": "leit_aendern",          "konstrukt": "LEIT_WIRKUNG", "typ": "frei",    "zeitpunkt": "post", "max_eintraege": 2, "ueberspringbar": true, "text": "Was würdest du beim nächsten Mal anders machen?" },
+    { "id": "leit_wieder",           "konstrukt": "LEIT_WIRKUNG", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich würde ein ähnliches Projekt wieder anbieten." },
+    { "id": "leit_empfehlen",        "konstrukt": "LEIT_WIRKUNG", "typ": "likert4", "polung": "+", "zeitpunkt": "post", "text": "Ich empfehle anderen, ähnliche Projekte anzubieten." }
+  ],
+
+  "forms": {
+    "pre": [],
+    "post": [
+      "leit_rolle", "leit_erfahrung",
+      "leit_thema", "leit_ziel",
+      "leit_ziele_erreicht", "leit_part_qualitaet", "leit_scaffolding",
+      "leit_lerneffekt", "leit_soziales", "leit_selbstwirksamkeit",
+      "leit_barrieren_gate", "leit_barrieren_was",
+      "leit_ueberraschung", "leit_aendern",
+      "leit_wieder", "leit_empfehlen"
+    ]
+  },
+
+  "auswertung": {
+    "konstrukt_score": "Mittelwert der likert4-Items je Konstrukt.",
+    "vergleich_mit_B": {
+      "leit_thema":  "vs. mot_thema  (Bogen B) – Deckungsgrad Kreativformen",
+      "leit_ziel":   "vs. mot_ziel   (Bogen B) – Deckungsgrad Zielvorstellung",
+      "leit_part_qualitaet":    "vs. part_mitbestimmt (Bogen B)",
+      "leit_scaffolding":       "vs. erf_aufgaben_schaffbar (Bogen B)",
+      "leit_selbstwirksamkeit": "vs. selbst_veraendern (Bogen B)"
+    }
+  }
+}

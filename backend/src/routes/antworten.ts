@@ -4,6 +4,8 @@ import { db } from '../db.js';
 
 interface AntwortenBody {
   projekt_id: string;
+  instrument?: string;
+  rolle?: string;
   zeitpunkt: 'pre' | 'post';
   antworten: Record<string, unknown>;
   schema_version: string;
@@ -15,7 +17,7 @@ export async function antwortenRoutes(app: FastifyInstance) {
   app.post<{ Body: AntwortenBody }>(
     '/api/antworten',
     async (req, reply) => {
-      const { projekt_id, zeitpunkt, antworten, schema_version, token_hash } = req.body ?? {};
+      const { projekt_id, instrument, rolle, zeitpunkt, antworten, schema_version, token_hash } = req.body ?? {};
 
       // Validierung
       if (!projekt_id || !zeitpunkt || !antworten || !schema_version) {
@@ -34,11 +36,13 @@ export async function antwortenRoutes(app: FastifyInstance) {
       const id = randomUUID();
       db.prepare(`
         INSERT INTO antworten
-          (id, projekt_id, instrument, zeitpunkt, token_hash, schema_version, antworten)
-        VALUES (?, ?, 'B', ?, ?, ?, ?)
+          (id, projekt_id, instrument, rolle, zeitpunkt, token_hash, schema_version, antworten)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `).run(
         id,
         projekt_id,
+        instrument ?? 'B',
+        rolle ?? null,
         zeitpunkt,
         token_hash ?? null,
         schema_version,

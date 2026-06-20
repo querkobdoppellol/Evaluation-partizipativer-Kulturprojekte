@@ -41,6 +41,13 @@ db.exec(`
     ON antworten(projekt_id, zeitpunkt);
 `);
 
+// ── Migration: rolle-Spalte (sicher nachrüsten) ───────────────────────────────
+try {
+  db.exec("ALTER TABLE antworten ADD COLUMN rolle TEXT");
+} catch {
+  // Spalte existiert bereits — ignorieren
+}
+
 // ── Seed (einmalig beim ersten Start) ─────────────────────────────────────────
 
 const count = (db.prepare('SELECT COUNT(*) AS n FROM projekte').get() as { n: number }).n;
