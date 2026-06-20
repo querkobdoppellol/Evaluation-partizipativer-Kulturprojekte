@@ -1,15 +1,18 @@
 import type { Projekt } from '../types/instrument';
 import { ProjektSelectItem } from './items/ProjektSelectItem';
 
-type Step = 'projekt' | 'zeitpunkt' | 'consent';
+export type Rolle = 'teilnehmer' | 'leitung';
+type Step = 'rolle' | 'projekt' | 'zeitpunkt' | 'consent';
 
 interface Props {
   step: Step;
+  rolle: Rolle | undefined;
   projekte: Projekt[];
   projekteLoading?: boolean;
   projekteError?: string;
   projektId: string | undefined;
   zeitpunkt: 'pre' | 'post' | undefined;
+  onRolle: (r: Rolle) => void;
   onProjekt: (id: string) => void;
   onZeitpunkt: (z: 'pre' | 'post') => void;
   onConsent: (ok: boolean) => void;
@@ -18,11 +21,13 @@ interface Props {
 
 export function MetaFlow({
   step,
+  rolle,
   projekte,
   projekteLoading = false,
   projekteError = '',
   projektId,
   zeitpunkt,
+  onRolle,
   onProjekt,
   onZeitpunkt,
   onConsent,
@@ -30,12 +35,46 @@ export function MetaFlow({
 }: Props) {
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Header */}
       <header className="bg-blue-600 text-white px-6 py-4">
         <h1 className="text-xl font-bold">Befragung</h1>
       </header>
 
       <main className="flex-1 px-6 py-8 max-w-xl mx-auto w-full flex flex-col gap-8">
+
+        {/* ── Rollenwahl ─────────────────────────────────────────────── */}
+        {step === 'rolle' && (
+          <>
+            <h2 className="text-2xl font-semibold text-gray-900">Wer bist du?</h2>
+            <div className="flex flex-col gap-4">
+              <button
+                onClick={() => { onRolle('teilnehmer'); onWeiter(); }}
+                aria-pressed={rolle === 'teilnehmer'}
+                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
+                  transition-all bg-gray-50 border-gray-200 hover:bg-blue-50 hover:border-blue-300"
+              >
+                <span className="text-5xl">🙋</span>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">Ich nehme teil</div>
+                  <div className="text-sm text-gray-500 mt-1">Ich mache beim Projekt mit</div>
+                </div>
+              </button>
+              <button
+                onClick={() => { onRolle('leitung'); onWeiter(); }}
+                aria-pressed={rolle === 'leitung'}
+                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
+                  transition-all bg-gray-50 border-gray-200 hover:bg-purple-50 hover:border-purple-300"
+              >
+                <span className="text-5xl">🎯</span>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">Ich leite das Projekt</div>
+                  <div className="text-sm text-gray-500 mt-1">Leitung, künstlerisches oder pädagogisches Team</div>
+                </div>
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* ── Projektauswahl ─────────────────────────────────────────── */}
         {step === 'projekt' && (
           <>
             {projekteLoading && (
@@ -64,6 +103,7 @@ export function MetaFlow({
           </>
         )}
 
+        {/* ── Zeitpunkt (nur Teilnehmer*in) ──────────────────────────── */}
         {step === 'zeitpunkt' && (
           <>
             <h2 className="text-2xl font-semibold text-gray-900">
@@ -104,15 +144,20 @@ export function MetaFlow({
           </>
         )}
 
+        {/* ── Einwilligung ───────────────────────────────────────────── */}
         {step === 'consent' && (
           <>
             <div className="flex flex-col items-center gap-6 text-center">
               <span className="text-7xl">🔒</span>
               <h2 className="text-2xl font-semibold text-gray-900">
-                Wir merken uns deine Antworten ohne Namen.
+                {rolle === 'leitung'
+                  ? 'Deine Reflexion wird anonym gespeichert.'
+                  : 'Wir merken uns deine Antworten ohne Namen.'}
               </h2>
               <p className="text-gray-500 text-lg">
-                Niemand weiß, wer was gesagt hat. Du kannst jederzeit aufhören.
+                {rolle === 'leitung'
+                  ? 'Kein Name, kein Kontakt — nur deine Einschätzungen zum Projekt.'
+                  : 'Niemand weiß, wer was gesagt hat. Du kannst jederzeit aufhören.'}
               </p>
               <p className="text-lg font-medium text-gray-700">Ist das ok für dich?</p>
             </div>
@@ -136,6 +181,7 @@ export function MetaFlow({
             </div>
           </>
         )}
+
       </main>
     </div>
   );

@@ -3,6 +3,7 @@ import type { Answers } from '../types/instrument';
 
 export interface AntwortenPayload {
   projekt_id: string;
+  instrument: string;
   zeitpunkt: 'pre' | 'post';
   schema_version: string;
   antworten: Record<string, unknown>;
@@ -22,16 +23,17 @@ export function submitAntworten(payload: AntwortenPayload): Promise<AntwortenRes
   });
 }
 
-/** Merge answers + scan booleans into the submission payload */
 export function buildPayload(
   projektId: string,
   zeitpunkt: 'pre' | 'post',
   answers: Answers,
   scanData: Record<string, boolean>,
   schemaVersion = '1.0',
+  instrumentCode = 'B',
 ): AntwortenPayload {
   return {
     projekt_id: projektId,
+    instrument: instrumentCode,
     zeitpunkt,
     schema_version: schemaVersion,
     antworten: { ...answers, ...scanData } as Record<string, unknown>,
