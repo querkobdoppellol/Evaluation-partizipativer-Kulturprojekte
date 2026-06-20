@@ -162,12 +162,12 @@ export function MetaFlow({
             <div className="flex flex-col items-center gap-6 text-center">
               <span className="text-7xl">🔒</span>
               <h2 className="text-2xl font-semibold text-gray-900">
-                {rolle === 'leitung'
+                {(rolle === 'leitung' || rolle === 'unterstuetzung')
                   ? 'Deine Reflexion wird anonym gespeichert.'
                   : 'Wir merken uns deine Antworten ohne Namen.'}
               </h2>
               <p className="text-gray-500 text-lg">
-                {rolle === 'leitung'
+                {(rolle === 'leitung' || rolle === 'unterstuetzung')
                   ? 'Kein Name, kein Kontakt — nur deine Einschätzungen zum Projekt.'
                   : 'Niemand weiß, wer was gesagt hat. Du kannst jederzeit aufhören.'}
               </p>
