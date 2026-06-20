@@ -1,7 +1,7 @@
 import type { Projekt } from '../types/instrument';
 import { ProjektSelectItem } from './items/ProjektSelectItem';
 
-export type Rolle = 'teilnehmer' | 'leitung';
+export type Rolle = 'teilnehmer' | 'leitung' | 'unterstuetzung';
 type Step = 'rolle' | 'projekt' | 'zeitpunkt' | 'consent';
 
 interface Props {
@@ -67,7 +67,19 @@ export function MetaFlow({
                 <span className="text-5xl">🎯</span>
                 <div>
                   <div className="text-xl font-bold text-gray-900">Ich leite das Projekt</div>
-                  <div className="text-sm text-gray-500 mt-1">Leitung, künstlerisches oder pädagogisches Team</div>
+                  <div className="text-sm text-gray-500 mt-1">Projektleitung, künstlerische oder pädagogische Leitung</div>
+                </div>
+              </button>
+              <button
+                onClick={() => { onRolle('unterstuetzung'); onWeiter(); }}
+                aria-pressed={rolle === 'unterstuetzung'}
+                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
+                  transition-all bg-gray-50 border-gray-200 hover:bg-purple-50 hover:border-purple-300"
+              >
+                <span className="text-5xl">🤝</span>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">Ich unterstütze die Leitung</div>
+                  <div className="text-sm text-gray-500 mt-1">Assistenz, Co-Leitung, Begleitung</div>
                 </div>
               </button>
             </div>

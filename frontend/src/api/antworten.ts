@@ -4,6 +4,7 @@ import type { Answers } from '../types/instrument';
 export interface AntwortenPayload {
   projekt_id: string;
   instrument: string;
+  rolle: string;
   zeitpunkt: 'pre' | 'post';
   schema_version: string;
   antworten: Record<string, unknown>;
@@ -30,10 +31,12 @@ export function buildPayload(
   scanData: Record<string, boolean>,
   schemaVersion = '1.0',
   instrumentCode = 'B',
+  rolle = 'teilnehmer',
 ): AntwortenPayload {
   return {
     projekt_id: projektId,
     instrument: instrumentCode,
+    rolle,
     zeitpunkt,
     schema_version: schemaVersion,
     antworten: { ...answers, ...scanData } as Record<string, unknown>,

@@ -44,7 +44,7 @@ function FormFlow() {
   }, []);
 
   // Wähle das Instrument basierend auf der Rolle
-  const instrument = rolle === 'leitung' ? BOGEN_C : BOGEN_B;
+  const instrument = (rolle === 'leitung' || rolle === 'unterstuetzung') ? BOGEN_C : BOGEN_B;
 
   async function handleAbgeben(answers: Answers, scanData: Record<string, boolean>) {
     if (!projektId || !zeitpunkt || !rolle) return;
@@ -58,6 +58,7 @@ function FormFlow() {
         scanData,
         instrument.schema_version,
         instrument.instrument,
+        rolle,
       );
       const result = await submitAntworten(payload);
       setSubmitId(result.id);
@@ -74,7 +75,7 @@ function FormFlow() {
       setMetaStep('projekt');
     } else if (metaStep === 'projekt') {
       // Leitung → immer "post", Zeitpunkt-Screen überspringen
-      if (rolle === 'leitung') {
+      if (rolle === 'leitung' || rolle === 'unterstuetzung') {
         setZeitpunkt('post');
         setMetaStep('consent');
       } else {
@@ -99,7 +100,7 @@ function FormFlow() {
 
   // ── Done ──────────────────────────────────────────────────────────────────
   if (phase === 'done') {
-    const istLeitung = rolle === 'leitung';
+    const istLeitung = rolle === 'leitung' || rolle === 'unterstuetzung';
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-8 px-6">
         <span className="text-8xl">🎉</span>
