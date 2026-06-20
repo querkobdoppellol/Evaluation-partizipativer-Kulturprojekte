@@ -33,6 +33,7 @@ function FormFlow() {
   const [projekteLoading, setProjekteLoading] = useState(true);
   const [projekteError, setProjekteError]     = useState('');
 
+  const [consentDeclined, setConsentDeclined] = useState(false);
   const [submitting, setSubmitting]   = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitId, setSubmitId]       = useState<string | undefined>();
@@ -96,6 +97,29 @@ function FormFlow() {
     setZeitpunkt(undefined);
     setSubmitId(undefined);
     setSubmitError('');
+    setConsentDeclined(false);
+  }
+
+  // ── Einwilligung verweigert ────────────────────────────────────────────────
+  if (consentDeclined) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-8 px-6">
+        <span className="text-8xl">🙏</span>
+        <h1 className="text-3xl font-bold text-gray-900 text-center">
+          Danke für deine Zeit!
+        </h1>
+        <p className="text-lg text-gray-500 text-center max-w-sm">
+          Kein Problem. Du musst nichts ausfüllen.
+        </p>
+        <button
+          onClick={handleNeuStart}
+          className="px-8 py-4 rounded-2xl bg-gray-100 text-gray-700 text-lg font-semibold
+            hover:bg-gray-200 transition-all"
+        >
+          Zurück zum Anfang
+        </button>
+      </div>
+    );
   }
 
   // ── Done ──────────────────────────────────────────────────────────────────
@@ -163,7 +187,7 @@ function FormFlow() {
       onRolle={setRolle}
       onProjekt={setProjektId}
       onZeitpunkt={setZeitpunkt}
-      onConsent={() => {}}
+      onConsent={(ok) => { if (!ok) setConsentDeclined(true); }}
       onWeiter={handleMetaWeiter}
     />
   );

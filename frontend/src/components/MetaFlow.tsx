@@ -183,12 +183,12 @@ export function MetaFlow({
                 Ja, ok!
               </button>
               <button
-                onClick={() => { onConsent(false); onWeiter(); }}
+                onClick={() => onConsent(false)}
                 className="flex flex-col items-center gap-2 py-8 rounded-2xl border-2 text-xl font-bold
                   bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 transition-all"
               >
-                <span className="text-4xl">➡️</span>
-                Weiter so
+                <span className="text-4xl">❌</span>
+                Nein
               </button>
             </div>
           </>
