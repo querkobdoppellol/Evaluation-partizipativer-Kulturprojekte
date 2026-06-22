@@ -12,7 +12,7 @@ interface Props {
   projekteError?: string;
   projektId: string | undefined;
   zeitpunkt: 'pre' | 'post' | undefined;
-  onRolle: (r: Rolle) => void;
+  onRolleWeiter: (r: Rolle) => void;
   onProjekt: (id: string) => void;
   onZeitpunkt: (z: 'pre' | 'post') => void;
   onConsent: (ok: boolean) => void;
@@ -27,7 +27,7 @@ export function MetaFlow({
   projekteError = '',
   projektId,
   zeitpunkt,
-  onRolle,
+  onRolleWeiter,
   onProjekt,
   onZeitpunkt,
   onConsent,
@@ -40,51 +40,6 @@ export function MetaFlow({
       </header>
 
       <main className="flex-1 px-6 py-8 max-w-xl mx-auto w-full flex flex-col gap-8">
-
-        {/* ── Rollenwahl ─────────────────────────────────────────────── */}
-        {step === 'rolle' && (
-          <>
-            <h2 className="text-2xl font-semibold text-gray-900">Wer bist du?</h2>
-            <div className="flex flex-col gap-4">
-              <button
-                onClick={() => { onRolle('teilnehmer'); onWeiter(); }}
-                aria-pressed={rolle === 'teilnehmer'}
-                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
-                  transition-all bg-gray-50 border-gray-200 hover:bg-blue-50 hover:border-blue-300"
-              >
-                <span className="text-5xl">🙋</span>
-                <div>
-                  <div className="text-xl font-bold text-gray-900">Ich nehme teil</div>
-                  <div className="text-sm text-gray-500 mt-1">Ich mache beim Projekt mit</div>
-                </div>
-              </button>
-              <button
-                onClick={() => { onRolle('leitung'); onWeiter(); }}
-                aria-pressed={rolle === 'leitung'}
-                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
-                  transition-all bg-gray-50 border-gray-200 hover:bg-purple-50 hover:border-purple-300"
-              >
-                <span className="text-5xl">🎯</span>
-                <div>
-                  <div className="text-xl font-bold text-gray-900">Ich leite das Projekt</div>
-                  <div className="text-sm text-gray-500 mt-1">Projektleitung, künstlerische oder pädagogische Leitung</div>
-                </div>
-              </button>
-              <button
-                onClick={() => { onRolle('unterstuetzung'); onWeiter(); }}
-                aria-pressed={rolle === 'unterstuetzung'}
-                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
-                  transition-all bg-gray-50 border-gray-200 hover:bg-purple-50 hover:border-purple-300"
-              >
-                <span className="text-5xl">🤝</span>
-                <div>
-                  <div className="text-xl font-bold text-gray-900">Ich unterstütze die Leitung</div>
-                  <div className="text-sm text-gray-500 mt-1">Assistenz, Co-Leitung, Begleitung</div>
-                </div>
-              </button>
-            </div>
-          </>
-        )}
 
         {/* ── Projektauswahl ─────────────────────────────────────────── */}
         {step === 'projekt' && (
@@ -112,6 +67,51 @@ export function MetaFlow({
             >
               Weiter →
             </button>
+          </>
+        )}
+
+        {/* ── Rollenwahl ─────────────────────────────────────────────── */}
+        {step === 'rolle' && (
+          <>
+            <h2 className="text-2xl font-semibold text-gray-900">Wer bist du?</h2>
+            <div className="flex flex-col gap-4">
+              <button
+                onClick={() => onRolleWeiter('teilnehmer')}
+                aria-pressed={rolle === 'teilnehmer'}
+                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
+                  transition-all bg-gray-50 border-gray-200 hover:bg-blue-50 hover:border-blue-300"
+              >
+                <span className="text-5xl">🙋</span>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">Ich nehme teil</div>
+                  <div className="text-sm text-gray-500 mt-1">Ich mache beim Projekt mit</div>
+                </div>
+              </button>
+              <button
+                onClick={() => onRolleWeiter('leitung')}
+                aria-pressed={rolle === 'leitung'}
+                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
+                  transition-all bg-gray-50 border-gray-200 hover:bg-purple-50 hover:border-purple-300"
+              >
+                <span className="text-5xl">🎯</span>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">Ich leite das Projekt</div>
+                  <div className="text-sm text-gray-500 mt-1">Projektleitung, künstlerische oder pädagogische Leitung</div>
+                </div>
+              </button>
+              <button
+                onClick={() => onRolleWeiter('unterstuetzung')}
+                aria-pressed={rolle === 'unterstuetzung'}
+                className="flex items-center gap-5 px-6 py-6 rounded-2xl border-2 text-left
+                  transition-all bg-gray-50 border-gray-200 hover:bg-purple-50 hover:border-purple-300"
+              >
+                <span className="text-5xl">🤝</span>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">Ich unterstütze die Leitung</div>
+                  <div className="text-sm text-gray-500 mt-1">Assistenz, Co-Leitung, Begleitung</div>
+                </div>
+              </button>
+            </div>
           </>
         )}
 

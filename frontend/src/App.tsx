@@ -22,12 +22,12 @@ export default function App() {
   return <FormFlow />;
 }
 
-type MetaStep   = 'rolle' | 'projekt' | 'zeitpunkt' | 'consent';
+type MetaStep   = 'projekt' | 'rolle' | 'zeitpunkt' | 'consent';
 type LeitSchritt = 'C' | 'B-E-intro' | 'B-E'; // zweistufiger Flow für Leitung
 
 function FormFlow() {
   const [phase, setPhase]         = useState<AppPhase>('meta_projekt');
-  const [metaStep, setMetaStep]   = useState<MetaStep>('rolle');
+  const [metaStep, setMetaStep]   = useState<MetaStep>('projekt');
   const [rolle, setRolle]         = useState<Rolle | undefined>();
   const [projektId, setProjektId] = useState<string | undefined>();
   const [zeitpunkt, setZeitpunkt] = useState<'pre' | 'post' | undefined>();
@@ -86,16 +86,21 @@ function FormFlow() {
     }
   }
 
+  // Rolle-Auswahl mit direktem Weiterspringen — vermeidet stale-state-Problem
+  function handleRolleWeiter(r: Rolle) {
+    setRolle(r);
+    const isLeit = r === 'leitung' || r === 'unterstuetzung';
+    if (isLeit) {
+      setZeitpunkt('post');
+      setMetaStep('consent');
+    } else {
+      setMetaStep('zeitpunkt');
+    }
+  }
+
   function handleMetaWeiter() {
-    if (metaStep === 'rolle') {
-      setMetaStep('projekt');
-    } else if (metaStep === 'projekt') {
-      if (istLeitungsRolle) {
-        setZeitpunkt('post');
-        setMetaStep('consent');
-      } else {
-        setMetaStep('zeitpunkt');
-      }
+    if (metaStep === 'projekt') {
+      setMetaStep('rolle');
     } else if (metaStep === 'zeitpunkt') {
       setMetaStep('consent');
     } else {
@@ -105,7 +110,7 @@ function FormFlow() {
 
   function handleNeuStart() {
     setPhase('meta_projekt');
-    setMetaStep('rolle');
+    setMetaStep('projekt');
     setRolle(undefined);
     setProjektId(undefined);
     setZeitpunkt(undefined);
@@ -233,7 +238,7 @@ function FormFlow() {
       projekteError={projekteError}
       projektId={projektId}
       zeitpunkt={zeitpunkt}
-      onRolle={setRolle}
+      onRolleWeiter={handleRolleWeiter}
       onProjekt={setProjektId}
       onZeitpunkt={setZeitpunkt}
       onConsent={(ok) => { if (!ok) setConsentDeclined(true); }}
