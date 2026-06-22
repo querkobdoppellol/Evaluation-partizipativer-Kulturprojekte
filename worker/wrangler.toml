@@ -6,12 +6,12 @@ account_id         = "5f7491dbc34061c859f19dceecedc286"
 [[d1_databases]]
 binding        = "DB"
 database_name  = "wertapp"
-database_id    = "FÜGE_DATABASE_ID_EIN"   # ersetzen nach: wrangler d1 create wertapp
+database_id    = "55185d04-0531-4d60-b4b8-31a795a47b72"
 migrations_dir = "migrations"
 
 # Worker wird nur für /api/* aufgerufen; der Rest geht an Cloudflare Pages
 [[routes]]
-pattern   = "mitmachen.pitsuchtpot.net/api/*"
+pattern   = "umfrage.pitsuchtpot.net/api/*"
 zone_name = "pitsuchtpot.net"
 
 [dev]
