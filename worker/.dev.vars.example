@@ -1,0 +1,3 @@
+# Kopiere diese Datei nach .dev.vars und passe die Werte an.
+# .dev.vars wird von wrangler dev für lokale Secrets genutzt — nicht committen!
+ADMIN_PASSWORD=admin

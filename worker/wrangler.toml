@@ -1,0 +1,18 @@
+name               = "wertapp-api"
+main               = "src/index.ts"
+compatibility_date = "2025-01-01"
+account_id         = "5f7491dbc34061c859f19dceecedc286"
+
+[[d1_databases]]
+binding        = "DB"
+database_name  = "wertapp"
+database_id    = "FÜGE_DATABASE_ID_EIN"   # ersetzen nach: wrangler d1 create wertapp
+migrations_dir = "migrations"
+
+# Worker wird nur für /api/* aufgerufen; der Rest geht an Cloudflare Pages
+[[routes]]
+pattern   = "mitmachen.pitsuchtpot.net/api/*"
+zone_name = "pitsuchtpot.net"
+
+[dev]
+port = 8787

@@ -17,6 +17,10 @@ backend/data/
 .env
 .env.local
 .env.production
+worker/.dev.vars
+
+# Wrangler local state
+worker/.wrangler/
 
 # Test artifacts
 verify-shots*/
