@@ -251,6 +251,19 @@
       "text": "Warst du hier schon mal bei einem Projekt?"
     },
     {
+      "id": "demo_dauer",
+      "konstrukt": "DEMO",
+      "typ": "single",
+      "zeitpunkt": "post",
+      "optionen": [
+        "ein paar Tage",
+        "ein paar Wochen",
+        "ein paar Monate",
+        "länger"
+      ],
+      "text": "Wie lange bist du beim Projekt dabei?"
+    },
+    {
       "id": "mot_warum",
       "konstrukt": "MOT",
       "typ": "multi",
@@ -691,6 +704,7 @@
       "selbst_gemeinsam"
     ],
     "post": [
+      "demo_dauer",
       "mot_thema",
       "mot_ziel",
       "lern_gate",

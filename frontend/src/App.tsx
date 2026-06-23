@@ -22,7 +22,7 @@ export default function App() {
   return <FormFlow />;
 }
 
-type MetaStep   = 'projekt' | 'rolle' | 'zeitpunkt' | 'consent';
+type MetaStep   = 'projekt' | 'rolle' | 'consent';
 type LeitSchritt = 'C' | 'B-E-intro' | 'B-E'; // zweistufiger Flow für Leitung
 
 function FormFlow() {
@@ -30,7 +30,6 @@ function FormFlow() {
   const [metaStep, setMetaStep]   = useState<MetaStep>('projekt');
   const [rolle, setRolle]         = useState<Rolle | undefined>();
   const [projektId, setProjektId] = useState<string | undefined>();
-  const [zeitpunkt, setZeitpunkt] = useState<'pre' | 'post' | undefined>();
   const [leitSchritt, setLeitSchritt] = useState<LeitSchritt>('C');
 
   const [projekte, setProjekte]               = useState<Projekt[]>([]);
@@ -58,13 +57,13 @@ function FormFlow() {
   }
 
   async function handleAbgeben(answers: Answers, scanData: Record<string, boolean>) {
-    if (!projektId || !zeitpunkt || !rolle) return;
+    if (!projektId || !rolle) return;
     setSubmitting(true);
     setSubmitError('');
     try {
       const instr = aktivesInstrument();
       const payload = buildPayload(
-        projektId, zeitpunkt, answers, scanData,
+        projektId, 'post', answers, scanData,
         instr.schema_version, instr.instrument, rolle,
       );
       const result = await submitAntworten(payload);
@@ -86,23 +85,15 @@ function FormFlow() {
     }
   }
 
-  // Rolle-Auswahl mit direktem Weiterspringen — vermeidet stale-state-Problem
+  // Rolle-Auswahl → immer direkt zur Einwilligung
   function handleRolleWeiter(r: Rolle) {
     setRolle(r);
-    const isLeit = r === 'leitung' || r === 'unterstuetzung';
-    if (isLeit) {
-      setZeitpunkt('post');
-      setMetaStep('consent');
-    } else {
-      setMetaStep('zeitpunkt');
-    }
+    setMetaStep('consent');
   }
 
   function handleMetaWeiter() {
     if (metaStep === 'projekt') {
       setMetaStep('rolle');
-    } else if (metaStep === 'zeitpunkt') {
-      setMetaStep('consent');
     } else {
       setPhase('form');
     }
@@ -113,7 +104,6 @@ function FormFlow() {
     setMetaStep('projekt');
     setRolle(undefined);
     setProjektId(undefined);
-    setZeitpunkt(undefined);
     setLeitSchritt('C');
     setSubmitId(undefined);
     setSubmitError('');
@@ -218,11 +208,11 @@ function FormFlow() {
   }
 
   // ── Form ───────────────────────────────────────────────────────────────────
-  if (phase === 'form' && zeitpunkt) {
+  if (phase === 'form') {
     return (
       <BogenRenderer
         instrument={aktivesInstrument()}
-        zeitpunkt={zeitpunkt}
+        zeitpunkt="post"
         onAbgeben={handleAbgeben}
       />
     );
@@ -237,10 +227,8 @@ function FormFlow() {
       projekteLoading={projekteLoading}
       projekteError={projekteError}
       projektId={projektId}
-      zeitpunkt={zeitpunkt}
       onRolleWeiter={handleRolleWeiter}
       onProjekt={setProjektId}
-      onZeitpunkt={setZeitpunkt}
       onConsent={(ok) => { if (!ok) setConsentDeclined(true); }}
       onWeiter={handleMetaWeiter}
     />

@@ -96,9 +96,6 @@ export function BogenRenderer({ instrument, zeitpunkt, onAbgeben }: Props) {
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
       <header className="bg-blue-600 text-white px-6 py-4 flex items-center justify-between gap-4">
-        <span className="text-sm font-medium opacity-80">
-          {zeitpunkt === 'pre' ? 'Anfang' : 'Ende'}
-        </span>
         <div className="flex-1 max-w-xs">
           <ProgressBar aktuell={currentIndex + 1} gesamt={gesamt} />
         </div>
@@ -200,23 +197,33 @@ export function BogenRenderer({ instrument, zeitpunkt, onAbgeben }: Props) {
       </main>
 
       {/* Navigation */}
-      <footer className="px-6 py-5 border-t border-gray-100 flex gap-3 max-w-xl mx-auto w-full">
-        {currentIndex > 0 && (
+      <footer className="px-6 py-5 border-t border-gray-100 flex flex-col gap-2 max-w-xl mx-auto w-full">
+        <div className="flex gap-3">
+          {currentIndex > 0 && (
+            <button
+              onClick={goBack}
+              className="flex-1 py-4 rounded-2xl border-2 border-gray-200 text-gray-600
+                text-lg font-medium hover:bg-gray-50 transition-all"
+            >
+              ← Zurück
+            </button>
+          )}
           <button
-            onClick={goBack}
-            className="flex-1 py-4 rounded-2xl border-2 border-gray-200 text-gray-600
-              text-lg font-medium hover:bg-gray-50 transition-all"
+            onClick={goNext}
+            className="flex-1 py-4 rounded-2xl bg-blue-600 text-white text-lg font-bold
+              hover:bg-blue-700 transition-all"
           >
-            ← Zurück
+            {currentIndex < gesamt - 1 ? 'Weiter →' : 'Abschicken ✓'}
+          </button>
+        </div>
+        {currentIndex < gesamt - 1 && (
+          <button
+            onClick={goNext}
+            className="text-sm text-gray-400 hover:text-gray-600 py-1 transition-colors"
+          >
+            Überspringen
           </button>
         )}
-        <button
-          onClick={goNext}
-          className="flex-1 py-4 rounded-2xl bg-blue-600 text-white text-lg font-bold
-            hover:bg-blue-700 transition-all"
-        >
-          {currentIndex < gesamt - 1 ? 'Weiter →' : 'Abschicken ✓'}
-        </button>
       </footer>
     </div>
   );

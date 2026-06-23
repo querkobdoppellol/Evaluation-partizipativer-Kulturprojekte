@@ -2,7 +2,7 @@ import type { Projekt } from '../types/instrument';
 import { ProjektSelectItem } from './items/ProjektSelectItem';
 
 export type Rolle = 'teilnehmer' | 'leitung' | 'unterstuetzung';
-type Step = 'rolle' | 'projekt' | 'zeitpunkt' | 'consent';
+type Step = 'rolle' | 'projekt' | 'consent';
 
 interface Props {
   step: Step;
@@ -11,10 +11,8 @@ interface Props {
   projekteLoading?: boolean;
   projekteError?: string;
   projektId: string | undefined;
-  zeitpunkt: 'pre' | 'post' | undefined;
   onRolleWeiter: (r: Rolle) => void;
   onProjekt: (id: string) => void;
-  onZeitpunkt: (z: 'pre' | 'post') => void;
   onConsent: (ok: boolean) => void;
   onWeiter: () => void;
 }
@@ -26,10 +24,8 @@ export function MetaFlow({
   projekteLoading = false,
   projekteError = '',
   projektId,
-  zeitpunkt,
   onRolleWeiter,
   onProjekt,
-  onZeitpunkt,
   onConsent,
   onWeiter,
 }: Props) {
@@ -112,47 +108,6 @@ export function MetaFlow({
                 </div>
               </button>
             </div>
-          </>
-        )}
-
-        {/* ── Zeitpunkt (nur Teilnehmer*in) ──────────────────────────── */}
-        {step === 'zeitpunkt' && (
-          <>
-            <h2 className="text-2xl font-semibold text-gray-900">
-              Wann füllst du den Fragebogen aus?
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                onClick={() => onZeitpunkt('pre')}
-                aria-pressed={zeitpunkt === 'pre'}
-                className={`flex flex-col items-center gap-3 py-10 rounded-2xl border-2 text-xl font-bold transition-all
-                  ${zeitpunkt === 'pre'
-                    ? 'bg-blue-600 text-white border-blue-700 ring-4 ring-blue-300'
-                    : 'bg-gray-50 text-gray-800 border-gray-200 hover:bg-blue-50 hover:border-blue-300'}`}
-              >
-                <span className="text-5xl">🌅</span>
-                Am Anfang
-              </button>
-              <button
-                onClick={() => onZeitpunkt('post')}
-                aria-pressed={zeitpunkt === 'post'}
-                className={`flex flex-col items-center gap-3 py-10 rounded-2xl border-2 text-xl font-bold transition-all
-                  ${zeitpunkt === 'post'
-                    ? 'bg-blue-600 text-white border-blue-700 ring-4 ring-blue-300'
-                    : 'bg-gray-50 text-gray-800 border-gray-200 hover:bg-blue-50 hover:border-blue-300'}`}
-              >
-                <span className="text-5xl">🌆</span>
-                Am Ende
-              </button>
-            </div>
-            <button
-              onClick={onWeiter}
-              disabled={!zeitpunkt}
-              className="mt-auto w-full py-5 rounded-2xl text-xl font-bold transition-all
-                bg-blue-600 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-700"
-            >
-              Weiter →
-            </button>
           </>
         )}
 
